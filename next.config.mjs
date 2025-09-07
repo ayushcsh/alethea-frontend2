@@ -3,10 +3,8 @@ const nextConfig = {
   // Enable React Strict Mode
   reactStrictMode: true,
   
-  // Disable server components external packages as it's not needed in newer Next.js versions
-  experimental: {
-    serverComponentsExternalPackages: ['@tailwindcss/typography']
-  },
+  // External packages for server components
+  serverExternalPackages: ['@tailwindcss/typography'],
   
   // Configure webpack
   webpack: (config, { isServer }) => {
@@ -18,14 +16,6 @@ const nextConfig = {
       };
     }
     
-    // Add a rule to handle lightningcss wasm files
-    config.module.rules.push({
-      test: /\.wasm$/,
-      type: 'asset/resource',
-      generator: {
-        filename: 'static/wasm/[name].[contenthash][ext]',
-      },
-    });
     
     return config;
   },
