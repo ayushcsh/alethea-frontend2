@@ -1,13 +1,19 @@
-import { Inter } from 'next/font/google';
 import "./globals.css";
 import Sessionwrapper from "./components/sessionwrapper";
 
-// Using Inter font as it's more reliable with Vercel
+// Using system fonts for better reliability and performance
+const fontClass = 'font-sans';
+
+// If you want to use Google Fonts in the future, you can uncomment this:
+/*
+import { Inter } from 'next/font/google';
 const inter = Inter({
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-inter',
 })
+const fontClass = inter.className;
+*/
 
 export const metadata = {
   title: "Create Next App",
@@ -18,7 +24,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       
-      <body className={`${inter.variable} font-sans antialiased`}>
+      <body className={`${fontClass} antialiased`}>
         <Sessionwrapper>
         {children}
         </Sessionwrapper>

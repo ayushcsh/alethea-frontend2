@@ -1,11 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Disable server components external packages as it's not needed in newer Next.js versions
-  serverExternalPackages: ['@tailwindcss/typography'],
-  
-  // Enable SWC minification for better performance
-  swcMinify: true,
-  
   // Enable React Strict Mode
   reactStrictMode: true,
   
@@ -18,13 +12,8 @@ const nextConfig = {
         canvas: false,
       };
     }
-    
-    // Add any additional webpack configurations here
     return config;
   },
-  
-  // Enable static exports for Vercel
-  output: 'standalone',
   
   // Configure images
   images: {
