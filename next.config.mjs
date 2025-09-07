@@ -3,6 +3,11 @@ const nextConfig = {
   // Enable React Strict Mode
   reactStrictMode: true,
   
+  // Disable server components external packages as it's not needed in newer Next.js versions
+  experimental: {
+    serverComponentsExternalPackages: ['@tailwindcss/typography']
+  },
+  
   // Configure webpack
   webpack: (config, { isServer }) => {
     // Fixes npm packages that depend on `canvas` module
@@ -12,6 +17,16 @@ const nextConfig = {
         canvas: false,
       };
     }
+    
+    // Add a rule to handle lightningcss wasm files
+    config.module.rules.push({
+      test: /\.wasm$/,
+      type: 'asset/resource',
+      generator: {
+        filename: 'static/wasm/[name].[contenthash][ext]',
+      },
+    });
+    
     return config;
   },
   
@@ -24,6 +39,17 @@ const nextConfig = {
         hostname: '**',
       },
     ],
+  },
+  
+  // Enable SWC minification
+  swcMinify: false,
+  
+  // Enable standalone output for better compatibility with Vercel
+  output: 'standalone',
+  
+  // Configure environment variables
+  env: {
+    NEXT_PUBLIC_APP_ENV: process.env.NODE_ENV || 'production',
   },
 };
 
