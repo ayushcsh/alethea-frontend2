@@ -27,6 +27,6 @@ module.exports = {
     },
   },
   plugins: [
-    require('@tailwindcss/typography'),
+    require('tw-animate-css'),
   ],
 };
