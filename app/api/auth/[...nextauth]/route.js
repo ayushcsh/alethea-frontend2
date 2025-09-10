@@ -1,40 +1,21 @@
-import NextAuth from "next-auth"
-import GitHubProvider from "next-auth/providers/github"
-import mongoose from "mongoose"
-import User from "@/models/user"
+import NextAuth from "next-auth";
+import GitHubProvider from "next-auth/providers/github";
 
-const authOptions = {
+export const authoptions = NextAuth({
   providers: [
     GitHubProvider({
       clientId: process.env.GITHUB_ID,
       clientSecret: process.env.GITHUB_SECRET,
     }),
   ],
-  secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
-    async signIn({ user, account, profile }) {
-      if (account.provider === "github") {
-        try {
-          // Use your Atlas connection string instead of localhost
-          await mongoose.connect(process.env.MONGODB_URI)
-
-          const currentUser = await User.findOne({ email: user.email })
-          if (!currentUser) {
-            const newUser = new User({
-              name: profile.name || user.name,
-              email: user.email,
-            })
-            await newUser.save()
-          }
-        } catch (error) {
-          console.error("MongoDB connection error:", error)
-          return false
-        }
+    async signIn({ account }) {
+      if (account?.provider === "github") {
+        return true; // ✅ allow GitHub login without DB
       }
-      return true
+      return false;
     },
   },
-}
+});
 
-const handler = NextAuth(authOptions)
-export { handler as GET, handler as POST }
+export { authoptions as GET, authoptions as POST }; 
