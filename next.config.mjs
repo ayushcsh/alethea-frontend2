@@ -32,7 +32,7 @@ const nextConfig = {
   },
   
   // Enable SWC minification
-  swcMinify: false,
+  // swcMinify: false,
   
   // Enable standalone output for better compatibility with Vercel
   output: 'standalone',
